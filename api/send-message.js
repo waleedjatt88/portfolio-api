@@ -1,10 +1,21 @@
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
+  // ✅ Allowed origins list (add more if needed)
+  const allowedOrigins = [
+    "https://waleed-portfolio-amber.vercel.app", // your live frontend
+    "http://localhost:5173", // local dev (optional)
+  ];
+
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+
   // ✅ CORS headers
-  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Vary", "Origin");
 
   // ✅ Handle preflight
   if (req.method === "OPTIONS") {
@@ -24,6 +35,7 @@ export default async function handler(req, res) {
   }
 
   try {
+    // ✅ Create transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -32,6 +44,7 @@ export default async function handler(req, res) {
       },
     });
 
+    // ✅ Send email
     await transporter.sendMail({
       from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
