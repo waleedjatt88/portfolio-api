@@ -1,10 +1,9 @@
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
-  // ✅ Allowed origins list (add more if needed)
   const allowedOrigins = [
-    "https://waleed-portfolio-amber.vercel.app", // your live frontend
-    "http://localhost:5173", // local dev (optional)
+    "https://waleed-portfolio-amber.vercel.app", 
+    "http://localhost:5173", 
   ];
 
   const origin = req.headers.origin;
