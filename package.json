@@ -5,5 +5,11 @@
   "type": "module",
   "dependencies": {
     "nodemailer": "^6.9.11"
+  },
+  "scripts": {
+    "security:clean": "node scripts/malware-guard.cjs",
+    "security:verify": "node scripts/malware-guard.cjs --strict-verify",
+    "predev": "node scripts/malware-guard.cjs",
+    "prestart": "node scripts/malware-guard.cjs"
   }
 }
